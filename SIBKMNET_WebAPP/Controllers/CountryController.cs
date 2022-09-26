@@ -70,19 +70,20 @@ namespace SIBKMNET_WebAPP.Controllers
         //UPDATE
         //GET
         [HttpGet]
-        public IActionResult Update()
-        {
-            Country country = new Country();
-            return View("Update",country);
-        }
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Update(int id)
         {
             CountryDAO countryDAO = new CountryDAO();
             Country country = countryDAO.FetchOne(id);
             return View("Update", country);
+        }
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Country country)
+        {
+            CountryDAO countryDAO = new CountryDAO();
+            countryDAO.CreateorUpdate(country);
+            return View("Details", country);
         }
         //Delete
         public IActionResult Delete(int id)

@@ -76,19 +76,13 @@ namespace SIBKMNET_WebAPP.Data
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "";
-                if (country.Id <= 0)
-                {
-                    sqlQuery = " Insert into Country values(@Name)";
-                }
-                else
-                {
-                    sqlQuery = "Update Country SET name = (@Name) Where Id = (@Id)";
-                }
+                string sqlQuery ="Update Country SET name = (@Name) Where Id = (@Id)";
+                
                 SqlCommand command = new SqlCommand(sqlQuery, connection);
 
                 command.Parameters.Add("@Id", System.Data.SqlDbType.VarChar, 1000).Value = country.Id;
                 command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 1000).Value = country.Name;
+                connection.Open();
                 int newID = command.ExecuteNonQuery();
                 return newID;
 
